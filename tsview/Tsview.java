@@ -30,6 +30,7 @@ public class Tsview {
                     "2.\tAdd toy\n"+
                     "3.\tEdit toy drop rate\n"+
                     "4.\tTransfer toy(s) to Lottery.\n"+
+                    "5.\tTransfer all toys to Lottery!!!\n"+
                     "0.\tPrevious menu\n"+
                     "Enter your choice:";
 
@@ -37,12 +38,14 @@ public class Tsview {
                     "2.\tLaunch the LOTTERY!!\n"+
                     "3.\tEdit toy drop rate\n"+
                     "4.\tTransfer toy(s) back to Store.\n"+
+                    "5.\tTransfer all toys back to Store!!!\n"+
                     "0.\tPrevious menu\n"+
                     "Enter your choice:";
     }
 
     public void viewStorage(Storage st) {
         if (st.getSize() != 0) {
+            System.out.println("id\tName\t\tQuantity\tDropRate");
             for (Toy t : st) {
                 System.out.println(t);
             }

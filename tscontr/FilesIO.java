@@ -7,7 +7,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import java.util.List;
 
 import tsmod.Storage;
 import tsmod.Toy;
@@ -64,18 +63,16 @@ public class FilesIO {
                 toy.getTitle(),
                 toy.getQuantity(),
                 toy.getRate());
-            // System.out.println(strToy);
-            bw.append(strToy);
-            bw.append(System.lineSeparator());
-        }
+        // System.out.println(strToy);
+        bw.append(strToy);
+        bw.append(System.lineSeparator());
+    }
 
-    public void writeFromLottery(File fout, List<String> list) {
+    public void writeFromLottery(File fout, String name) {
         try (FileWriter bufW = new FileWriter(fout, true)) {
-            bufW.append("Prizes list:" + System.lineSeparator());
-            for (String string : list) {
-                bufW.append(string);
-                bufW.append(System.lineSeparator());
-            }
+            // bufW.append("Prizes list:" + System.lineSeparator());
+            bufW.append(name);
+            bufW.append(System.lineSeparator());
             bufW.flush();
             bufW.close();
         } catch (IOException e) {
