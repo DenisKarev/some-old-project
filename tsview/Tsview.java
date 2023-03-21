@@ -23,19 +23,22 @@ public class Tsview {
         this.menu0 = "1.\tShop menu.\n"+
                     "2.\tLottery menu.\n"+
                     "3.\tRead toys from file\n"+
+                    "4.\tWrite toys to file\n"+
                     "0.\tExit\nEnter your choice";
 
         this.menu1 = "1.\tShow shop storage.\n"+
                     "2.\tAdd toy\n"+
                     "3.\tEdit toy drop rate\n"+
                     "4.\tTransfer toy(s) to Lottery.\n"+
-                    "0.\tPrevious menu\n";
+                    "0.\tPrevious menu\n"+
+                    "Enter your choice:";
 
         this.menu2 = "1.\tShow lottery storage.\n"+
                     "2.\tLaunch the LOTTERY!!\n"+
                     "3.\tEdit toy drop rate\n"+
                     "4.\tTransfer toy(s) back to Store.\n"+
-                    "0.\tPrevious menu\n";
+                    "0.\tPrevious menu\n"+
+                    "Enter your choice:";
     }
 
     public void viewStorage(Storage st) {
@@ -43,6 +46,7 @@ public class Tsview {
             for (Toy t : st) {
                 System.out.println(t);
             }
+            System.out.println();
         } else {
             System.out.println("Storage is EMPTY!");
         }

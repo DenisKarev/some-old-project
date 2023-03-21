@@ -14,8 +14,8 @@ public class Storage implements Iterable<Toy>, ttransfer {
     }
 
     public Toy getFromStorage(int i) {
-        if (i >= 0) {
-            for (Toy toy : storage) {
+        if (i >= 0 && i < this.lastId) {
+            for (Toy toy : this.storage) {
                 if (toy.id == i) {
                     return new Toy(toy);
                 }
@@ -25,6 +25,9 @@ public class Storage implements Iterable<Toy>, ttransfer {
     }
 
     public void addToStorage(Toy item) {
+        if (item.rate > 100){
+            item.rate = 100;
+        }
         if (this.isPresent(item)) {
             int idx = this.findToy(item);
             this.storage.get(idx).quantity += item.quantity;
@@ -106,6 +109,14 @@ public class Storage implements Iterable<Toy>, ttransfer {
 
     public int getSize() {
         return this.storage.size();
+    }
+
+    public void setToyRate(int id, int rate) {
+        if (id > this.storage.size() || id < 0) {
+            return;
+        } else {
+            this.storage.get(id).rate = rate;
+        }
     }
 
 }

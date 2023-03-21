@@ -1,5 +1,7 @@
 package tsmod;
 
+import java.util.List;
+
 import tscontr.Tscontr;
 // import tsmod.Toy;
 import tsview.Tsview;
@@ -25,7 +27,7 @@ public class ToyShop {
 
         while (running) {
             this.sv.menu(menu);
-            choice = this.sc.inputMenu("1230"); // "120" file menu disabled
+            choice = this.sc.inputMenu("12340"); // "120" file menu disabled
             switch (choice) {
                 case 0:
                     if (menu == 0) {
@@ -45,9 +47,15 @@ public class ToyShop {
                     menu = this.secondMenu(menu);
                     break;
                 case 3:
-                    menu = 3;
+                    // menu = 3;
                     // choice = this.fromFile(menu);
                     this.sc.fio.readFile(this.sc.fileIn, this.shopst);
+                    break;
+                case 4:
+                    // menu = 4;
+                    // choice = this.fromFile(menu);
+                    this.sc.fio.writeToysToFile(shopst, this.sc.fileIn);
+                    ;
                     break;
                 case -1:
                     this.sv.errInput(menu);
@@ -63,6 +71,9 @@ public class ToyShop {
         boolean smRun = true;
         int choice;
         while (smRun) {
+            int id = 0;
+            int value = 0;
+            boolean action = false;
             this.sv.menu(menu);
             choice = this.sc.inputMenu("12340");
             switch (choice) {
@@ -83,21 +94,48 @@ public class ToyShop {
                             this.sv.errInput(menu);
                         }
                     } else { // Launch the LOTTERY
-
+                        this.sv.strOut("How many times play the lottery? :");
+                        value = this.sc.inputInt();
+                        if (value < 0) {
+                            this.sv.strOut("Can't do that!");
+                        } else {
+                            List<String> l = this.toyl.lotteryPlay(value);
+                            this.sc.fio.writeFromLottery(this.sc.fileOut, l);
+                        }
                     }
                     break;
                 case 3:
+                    this.sv.strOut("Enter yot ID to change:");
+                    id = this.sc.inputInt();
+                    this.sv.strOut("Enter new Drop Rate:");
+                    value = this.sc.inputInt();
                     if (menu == 1) { // Edit toy drop rate
-
+                        action = this.sc.changeDrop(this.shopst, this.shopst.getFromStorage(id), value);
+                        if (action) {
+                            this.sv.viewStorage(shopst);
+                        }
                     } else { // Edit toy drop rate
-
+                        action = this.sc.changeDrop(this.toyl.lotst, this.toyl.lotst.getFromStorage(id), value);
+                        if (action) {
+                            this.sv.viewStorage(shopst);
+                        }
                     }
                     break;
                 case 4:
+                    this.sv.strOut("Enter yot ID to transfer:");
+                    id = this.sc.inputInt();
+                    this.sv.strOut("Enter AMONT to transfer:");
+                    value = this.sc.inputInt();
                     if (menu == 1) { // Transfer toy(s) to Lottery
-
+                        action = this.shopst.transfer(this.toyl.lotst, this.shopst.getFromStorage(id), value);
+                        if (action) {
+                            this.sv.viewStorage(shopst);
+                        }
                     } else { // Transfer toy(s) back to Store.
-
+                        action = this.toyl.lotst.transfer(this.shopst, this.toyl.lotst.getFromStorage(id), value);
+                        if (action) {
+                            this.sv.viewStorage(shopst);
+                        }
                     }
                     break;
                 case 0:
@@ -109,33 +147,6 @@ public class ToyShop {
             }
         }
         return menu;
-    }
-
-    // private int shop(int menu) {
-    // boolean shopR = true;
-    // int choice;
-    // while (shopR) {
-    // choice = this.sc.inputMenu("1230");
-    // }
-    // return menu;
-    // }
-
-    // private int lottery(int menu) {
-    // int choice;
-    // boolean lotteryR = true;
-    // return menu;
-    // }
-
-    // private int fromFile(int menu) {
-    // int ch = this.sc.inputMenu("1230");
-    // return 0;
-    // }
-
-    public boolean init() {
-        if (sc.checkInput()) {
-            return true;
-        }
-        return false;
     }
 
 }

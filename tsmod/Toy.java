@@ -4,9 +4,9 @@ public class Toy {
     protected int id;
     protected String name;
     protected int quantity; // amount
-    protected double rate; // drop rate
+    protected int rate; // drop rate
 
-    public Toy(String name, int quantity, double rate) {
+    public Toy(String name, int quantity, int rate) {
         this.name = name;
         this.quantity = quantity;
         this.rate = rate;
@@ -47,11 +47,11 @@ public class Toy {
         this.quantity = quantity;
     }
 
-    public double getRate() {
+    public int getRate() {
         return this.rate;
     }
 
-    public void setRate(double rate) {
+    public void setRate(int rate) {
         this.rate = rate;
     }
 
