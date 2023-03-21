@@ -13,22 +13,24 @@ public class Tsview {
     protected String menu2;
     
     public Tsview() {
-        this.init();
+        this.initMenus();
     }
 
-    private void init() {
-        this.title0 = "ToyStore  $name!\n";
+    private void initMenus() {
+        this.title0 = "ToyStore top menu\n";
         this.title1 = "Store menu !\n";
         this.title2 = "Lottery menu !\n";
         this.menu0 = "1.\tShop menu.\n"+
                     "2.\tLottery menu.\n"+
                     "3.\tRead toys from file\n"+
                     "0.\tExit\nEnter your choice";
+
         this.menu1 = "1.\tShow shop storage.\n"+
                     "2.\tAdd toy\n"+
                     "3.\tEdit toy drop rate\n"+
                     "4.\tTransfer toy(s) to Lottery.\n"+
                     "0.\tPrevious menu\n";
+
         this.menu2 = "1.\tShow lottery storage.\n"+
                     "2.\tLaunch the LOTTERY!!\n"+
                     "3.\tEdit toy drop rate\n"+
@@ -42,7 +44,7 @@ public class Tsview {
                 System.out.println(t);
             }
         } else {
-            System.out.println("Empty Storage!");
+            System.out.println("Storage is EMPTY!");
         }
     }
 
@@ -65,6 +67,10 @@ public class Tsview {
     }
 
     public void errInput(int menu) {
-        System.out.println("Error input try again");
+        System.out.println("Invalid input try again");
+    }
+
+    public void strOut(String string) {
+        System.out.println(string);
     }
 }
