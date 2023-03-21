@@ -20,15 +20,39 @@ public class Tscontr {
     private long tEnd;
     private String timeR;
 
-    public boolean checkInput() {
-        return false;
+    public Tscontr() {
+        this.fileIn = new File(filesettings.storage);
+        this.fileOut = new File(filesettings.output);
+        this.fio = new FilesIO();
+    }
+
+    public int inputInt() {
+        String inp = con.readLine();
+        try {
+            int id = Integer.parseInt(inp);
+            return id;
+        } catch (Exception e) {
+            // TODO: handle exception
+            System.err.println(e);
+            return -1;
+        }
     }
 
     public boolean addToy(Storage st, String toy) {
         String[] s = toy.split(" ");
-        if (s.length == 3) {
-            Toy t = new Toy(s[0], Integer.parseInt(s[1]), Double.parseDouble(s[2]));
+        String name = "";
+        if (s.length >= 3) {
+            if (s.length > 3) {
+                for (int i = 0; i < s.length-3; i++) {
+                    name += s[i] + " ";
+                }
+                name += s[s.length-2];
+            } else {
+                name = s[0];
+            }
+            Toy t = new Toy(name, Integer.parseInt(s[s.length - 1]), Integer.parseInt(s[s.length - 2]));
             st.addToStorage(t);
+            return true;
         }
         return false;
     }
@@ -81,6 +105,21 @@ public class Tscontr {
                 }
                 return null;
             }
+        }
+    }
+
+    public boolean changeDrop(Storage st, Toy t, int rate) {
+        if (!st.isPresent(t)) {
+            return false;
+        } else {
+            if (rate > 100) {
+                rate = 100;
+            }
+            if (rate < 0) {
+                return false;
+            }
+            st.setToyRate(t.getId(), rate);
+            return true;
         }
     }
 }

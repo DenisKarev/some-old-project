@@ -7,6 +7,7 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.Charset;
+import java.util.List;
 
 import tsmod.Storage;
 import tsmod.Toy;
@@ -19,11 +20,11 @@ public class FilesIO {
         boolean result = false;
         if (fr.exists() && !fr.isDirectory()) {
             try {
-                FileReader f = new FileReader(fr, Charset.forName("UFT-8"));
+                FileReader f = new FileReader(fr, Charset.forName("UTF-8"));
                 BufferedReader bufR = new BufferedReader(f);
                 if (bufR.ready()) {
                     String l = bufR.readLine();
-                    if (l != null && l.equals("ToysStore")) {
+                    if (l != null && l.equals("ToysStore;")) {
                         while ((str = bufR.readLine()) != null) {
                             String s[] = str.split(";");
                             stor.addToStorage(new Toy(s[0], Integer.parseInt(s[1]), Integer.parseInt(s[2])));
@@ -41,34 +42,44 @@ public class FilesIO {
         return result;
     }
 
-    private void writeToysToFile(Storage st, File f) {
+    public void writeToysToFile(Storage st, File f) {
         // TODO Auto-generated method stub
         // boolean result = false;
 
         try (FileWriter bufW = new FileWriter(f, false)) {
-            if (!f.exists()) {
-                bufW.append("ToysStore;" + System.lineSeparator());
-                for (Toy toy : st) {
-                    this.writeToy(toy, bufW);
-
-                }
-                bufW.flush();
-                bufW.close();
+            bufW.append("ToysStore;" + System.lineSeparator());
+            for (Toy toy : st) {
+                this.writeToy(toy, bufW);
             }
+            bufW.flush();
+            bufW.close();
         } catch (IOException e) {
             System.out.println(e);
         }
     }
 
     private void writeToy(Toy toy, FileWriter bw) throws IOException {
-        String strToy = String.format("%d;%s;%s;%s;%s;",
-                toy.getId(),
+        String strToy = String.format("%s;%s;%s;",
+                // toy.getId(),
                 toy.getTitle(),
                 toy.getQuantity(),
                 toy.getRate());
-        System.out.println(strToy);
+            // System.out.println(strToy);
             bw.append(strToy);
             bw.append(System.lineSeparator());
         }
 
+    public void writeFromLottery(File fout, List<String> list) {
+        try (FileWriter bufW = new FileWriter(fout, true)) {
+            bufW.append("Prizes list:" + System.lineSeparator());
+            for (String string : list) {
+                bufW.append(string);
+                bufW.append(System.lineSeparator());
+            }
+            bufW.flush();
+            bufW.close();
+        } catch (IOException e) {
+            System.out.println(e);
+        }
+    }
 }
