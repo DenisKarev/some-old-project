@@ -59,6 +59,6 @@ public class Toy {
     public String toString() {
 
         // return String.format("%s %s %s %s", this.id, this.name, this.quantity, this.rate);
-        return String.format("%s\t%s\t%s\t%s", this.id, this.name, this.quantity, this.rate);
+        return String.format("%s\t%s\t\t%s\t\t%s", this.id, this.name, this.quantity, this.rate);
     }
 }

@@ -1,7 +1,5 @@
 package tsmod;
 
-import java.util.List;
-
 import tscontr.Tscontr;
 // import tsmod.Toy;
 import tsview.Tsview;
@@ -75,7 +73,7 @@ public class ToyShop {
             int value = 0;
             boolean action = false;
             this.sv.menu(menu);
-            choice = this.sc.inputMenu("12340");
+            choice = this.sc.inputMenu("123450");
             switch (choice) {
                 case 1:
                     if (menu == 1) { // Show shop storage
@@ -96,11 +94,14 @@ public class ToyShop {
                     } else { // Launch the LOTTERY
                         this.sv.strOut("How many times play the lottery? :");
                         value = this.sc.inputInt();
-                        if (value < 0) {
-                            this.sv.strOut("Can't do that!");
+                        if (value < 0 || value > this.toyl.getStorageOverall()) {
+                            this.sv.strOut("Can't do that! Some values are wrong!");
                         } else {
-                            List<String> l = this.toyl.lotteryPlay(value);
-                            this.sc.fio.writeFromLottery(this.sc.fileOut, l);
+                            this.sc.fio.writeFromLottery(this.sc.fileOut, "Lottery " + value + " prizes");
+                            for (int i = 0; i < value; i++) {
+                                Toy t = this.toyl.lotteryPlay();
+                                this.sc.fio.writeFromLottery(this.sc.fileOut, t.getTitle());
+                            }
                         }
                     }
                     break;
@@ -129,12 +130,33 @@ public class ToyShop {
                     if (menu == 1) { // Transfer toy(s) to Lottery
                         action = this.shopst.transfer(this.toyl.lotst, this.shopst.getFromStorage(id), value);
                         if (action) {
-                            this.sv.viewStorage(shopst);
+                            this.sv.strOut("Done");
                         }
                     } else { // Transfer toy(s) back to Store.
                         action = this.toyl.lotst.transfer(this.shopst, this.toyl.lotst.getFromStorage(id), value);
                         if (action) {
-                            this.sv.viewStorage(shopst);
+                            this.sv.strOut("Done");
+                        }
+                    }
+                    break;
+                case 5:
+                    if (menu == 1) { // Transfer ALL toy to Lottery
+                        int stsize = this.shopst.getSize();
+                        for (int i = 0; i < stsize; i++) {
+                            action = this.shopst.transfer(this.toyl.lotst, this.shopst.getFromStorage(i),
+                                                            this.shopst.getFromStorage(i).getQuantity());
+                        }
+                        if (action) {
+                            this.sv.strOut("Done");
+                        }
+                    } else { // Transfer ALL toy back to Store.
+                        int stsize = this.toyl.lotst.getSize();
+                        for (int i = 0; i < stsize; i++) {
+                            action = this.toyl.lotst.transfer(this.shopst, this.toyl.lotst.getFromStorage(i),
+                                                                this.toyl.lotst.getFromStorage(i).getQuantity());
+                        }
+                        if (action) {
+                            this.sv.strOut("Done");
                         }
                     }
                     break;
