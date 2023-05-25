@@ -8,7 +8,7 @@ ___
 ___
 ### [some-old-project (HW01 Git-advanced)](./some-old-project.md)
 ___
-### [HW02 Git-advanced](./)
+### [HW02 Git-advanced](./HW02_Git-advanced.md)
 ___
 ### [Here will appear HW3 ](./)
 ___
